@@ -3,6 +3,13 @@ module.exports = {
   extends: ['universe/native'],
   plugins: ['react-native'],
   rules: {
+    'import/order': [
+      'warn',
+      {
+        'newlines-between': 'never',
+      },
+    ],
+
     'react/react-in-jsx-scope': 'off',
 
     'react-hooks/rules-of-hooks': 'error',
