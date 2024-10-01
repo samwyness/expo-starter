@@ -1,28 +1,27 @@
 {
   "expo": {
-    "name": "expo-starter",
+    "name": "Expo Starter",
     "slug": "expo-starter",
-    "scheme": "expo-starter",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./src/shared/assets/images/icon.png",
+    "scheme": "expo-starter",
     "userInterfaceStyle": "automatic",
     "splash": {
       "image": "./src/shared/assets/images/splash.png",
       "resizeMode": "contain",
       "backgroundColor": "#ffffff"
     },
-    "assetBundlePatterns": [
-      "**/*"
-    ],
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "bundleIdentifier": "com.samwyness.expostarter"
     },
     "android": {
       "adaptiveIcon": {
         "foregroundImage": "./src/shared/assets/images/adaptive-icon.png",
         "backgroundColor": "#ffffff"
-      }
+      },
+      "package": "com.samwyness.expostarter"
     },
     "web": {
       "bundler": "metro",
@@ -30,7 +29,8 @@
       "favicon": "./src/shared/assets/images/favicon.png"
     },
     "plugins": [
-      "expo-router"
+      "expo-router",
+      "expo-font"
     ],
     "experiments": {
       "typedRoutes": true
