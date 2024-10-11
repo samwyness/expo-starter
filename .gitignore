@@ -44,3 +44,6 @@ yarn-error.*
 
 # ide
 .vscode
+
+# test
+coverage
