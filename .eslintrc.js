@@ -12,8 +12,8 @@ module.exports = {
           ['^@', '^[a-z]'],
           [
             // Internal packages starting with `@`
-            '^@app',
-            '^@shared',
+            '^@/app',
+            '^@/shared',
             // Imports starting with `../`
             '^\\.\\.(?!/?$)',
             '^\\.\\./?$',
@@ -42,4 +42,11 @@ module.exports = {
     '@typescript-eslint/no-shadow': ['error'],
     'no-shadow': 'off',
   },
+  overrides: [
+    {
+      // Test files only
+      files: ['**/__tests__/**/*.[jt]s?(x)', '**/?(*.)+(spec|test).[jt]s?(x)'],
+      extends: ['plugin:testing-library/react'],
+    },
+  ],
 };

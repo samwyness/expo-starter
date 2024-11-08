@@ -8,17 +8,10 @@
     "noImplicitReturns": true,
     "noImplicitThis": true,
     "noUnusedLocals": true,
-    "baseUrl": ".",
     "paths": {
-      "assets/*": [
-        "./assets/*"
-      ],
-      "@app/*": [
-        "./src/app/*"
-      ],
-      "@shared/*": [
-        "./src/shared/*"
-      ],
+      "@/*": [
+        "./src/*"
+      ]
     }
   },
   "include": [

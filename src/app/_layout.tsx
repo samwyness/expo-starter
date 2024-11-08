@@ -1,3 +1,6 @@
+// eslint-disable-next-line
+import 'react-native-reanimated'; // Must come first!
+
 import FontAwesome from '@expo/vector-icons/FontAwesome';
 import {
   DarkTheme,
@@ -8,7 +11,8 @@ import { useFonts } from 'expo-font';
 import { Stack } from 'expo-router';
 import * as SplashScreen from 'expo-splash-screen';
 import { useEffect } from 'react';
-import { useColorScheme } from 'src/shared/components/useColorScheme';
+
+import { useColorScheme } from '@/shared/hooks/useColorScheme';
 
 export {
   // Catch any errors thrown by the Layout component.
@@ -25,7 +29,7 @@ SplashScreen.preventAutoHideAsync();
 
 export default function RootLayout() {
   const [loaded, error] = useFonts({
-    SpaceMono: require('assets/fonts/SpaceMono-Regular.ttf'),
+    SpaceMono: require('../../assets/fonts/SpaceMono-Regular.ttf'),
     ...FontAwesome.font,
   });
 

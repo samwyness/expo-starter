@@ -12,13 +12,15 @@
     "backgroundColor": "#ffffff"
   },
   "ios": {
-    "supportsTablet": true
+    "supportsTablet": true,
+    "bundleIdentifier": "com.samwyness.expostarter"
   },
   "android": {
     "adaptiveIcon": {
       "foregroundImage": "./assets/images/adaptive-icon.png",
       "backgroundColor": "#ffffff"
-    }
+    },
+    "package": "com.samwyness.expostarter"
   },
   "web": {
     "bundler": "metro",
