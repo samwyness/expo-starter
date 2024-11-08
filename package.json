@@ -5,15 +5,18 @@
   "private": true,
   "main": "expo-router/entry",
   "scripts": {
-    "start": "expo start",
+    "start": "expo start --dev-client",
+    "start:prod": "expo start --dev-client --no-dev --minify",
     "android": "expo run:android",
     "ios": "expo run:ios",
     "web": "expo start --web",
-    "lint": "eslint src/",
-    "lint:fix": "eslint src/ --fix",
+    "lint": "eslint --cache --ext .js,.jsx,.ts,.tsx src",
+    "lint:fix": "npm run lint -- --fix",
     "tsc": "tsc",
-    "test": "jest --watch --coverage=false --changedSince=origin/main",
-    "test:update": "jest -u --coverage=false"
+    "test": "NODE_ENV=test jest --forceExit --testTimeout=20000 --bail",
+    "test:watch": "NODE_ENV=test jest --watchAll",
+    "test:ci": "NODE_ENV=test jest --ci --forceExit",
+    "test:coverage": "NODE_ENV=test jest --coverage"
   },
   "jest": {
     "preset": "jest-expo",
