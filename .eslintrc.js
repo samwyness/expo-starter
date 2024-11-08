@@ -1,12 +1,30 @@
 module.exports = {
   root: true,
   extends: ['universe/native'],
-  plugins: ['react-native'],
+  plugins: ['react-native', 'simple-import-sort'],
   rules: {
-    'import/order': [
+    'import/order': 'off', // Included with eslint-config-universe
+    'simple-import-sort/imports': [
       'warn',
       {
-        'newlines-between': 'never',
+        groups: [
+          // Packages starting with `@` or any character
+          ['^@', '^[a-z]'],
+          [
+            // Internal packages starting with `@`
+            '^@app',
+            '^@shared',
+            // Imports starting with `../`
+            '^\\.\\.(?!/?$)',
+            '^\\.\\./?$',
+            // Imports starting with `./`
+            '^\\./(?=.*/)(?!/?$)',
+            '^\\.(?!/?$)',
+            '^\\./?$',
+          ],
+          // Side effect imports
+          ['^\\u0000'],
+        ],
       },
     ],
 
