@@ -1,39 +1,37 @@
 {
-  "expo": {
-    "name": "Expo Starter",
-    "slug": "expo-starter",
-    "version": "1.0.0",
-    "orientation": "portrait",
-    "icon": "./src/shared/assets/images/icon.png",
-    "scheme": "expo-starter",
-    "userInterfaceStyle": "automatic",
-    "splash": {
-      "image": "./src/shared/assets/images/splash.png",
-      "resizeMode": "contain",
+  "name": "expo-starter",
+  "slug": "expo-starter",
+  "scheme": "expo-starter",
+  "version": "1.0.0",
+  "orientation": "portrait",
+  "icon": "./assets/images/icon.png",
+  "userInterfaceStyle": "automatic",
+  "splash": {
+    "image": "./assets/images/splash.png",
+    "resizeMode": "contain",
+    "backgroundColor": "#ffffff"
+  },
+  "ios": {
+    "supportsTablet": true,
+    "bundleIdentifier": "com.samwyness.expostarter"
+  },
+  "android": {
+    "adaptiveIcon": {
+      "foregroundImage": "./assets/images/adaptive-icon.png",
       "backgroundColor": "#ffffff"
     },
-    "ios": {
-      "supportsTablet": true,
-      "bundleIdentifier": "com.samwyness.expostarter"
-    },
-    "android": {
-      "adaptiveIcon": {
-        "foregroundImage": "./src/shared/assets/images/adaptive-icon.png",
-        "backgroundColor": "#ffffff"
-      },
-      "package": "com.samwyness.expostarter"
-    },
-    "web": {
-      "bundler": "metro",
-      "output": "static",
-      "favicon": "./src/shared/assets/images/favicon.png"
-    },
-    "plugins": [
-      "expo-router",
-      "expo-font"
-    ],
-    "experiments": {
-      "typedRoutes": true
-    }
+    "package": "com.samwyness.expostarter"
+  },
+  "web": {
+    "bundler": "metro",
+    "output": "static",
+    "favicon": "./assets/images/favicon.png"
+  },
+  "plugins": [
+    "expo-router"
+  ],
+  "experiments": {
+    "tsconfigPaths": true,
+    "typedRoutes": true
   }
 }

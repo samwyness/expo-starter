@@ -3,11 +3,15 @@
   "compilerOptions": {
     "strict": true,
     "alwaysStrict": true,
-    "noImplicitAny": true,
     "strictFunctionTypes": true,
+    "noImplicitAny": true,
+    "noImplicitReturns": true,
     "noImplicitThis": true,
+    "noUnusedLocals": true,
     "paths": {
-      "@/*": [ "./*" ]
+      "@/*": [
+        "./src/*"
+      ]
     }
   },
   "include": [

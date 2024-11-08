@@ -15,3 +15,7 @@ coverage:
         if_ci_failed: error #success, failure, error, ignore
         informational: false
         only_pulls: false
+
+comment:
+  layout: 'condensed_header, condensed_files, condensed_footer'
+  hide_project_coverage: true
