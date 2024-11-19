@@ -1,9 +1,9 @@
 import { PropsWithChildren, useState } from 'react';
 import { StyleSheet, TouchableOpacity, useColorScheme } from 'react-native';
 
-import { ThemedText } from '@/shared/components/ThemedText';
-import { ThemedView } from '@/shared/components/ThemedView';
-import { IconSymbol } from '@/shared/components/ui/IconSymbol';
+import { ThemedText } from '#/shared/components/ThemedText';
+import { ThemedView } from '#/shared/components/ThemedView';
+import { IconSymbol } from '#/shared/components/ui/IconSymbol';
 import { Colors } from '../constants/Colors';
 
 export function Collapsible({

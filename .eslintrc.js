@@ -8,22 +8,30 @@ module.exports = {
       'warn',
       {
         groups: [
+          // Side effect imports.
+          ['^\\u0000'],
+
+          // Node.js builtins prefixed with `node:`.
+          ['^node:'],
+
           // Packages starting with `@` or any character
-          ['^@', '^[a-z]'],
+          // Things that start with a letter (or digit or underscore), or `@` followed by a letter.
+          ['^@?\\w'],
+
           [
-            // Internal packages starting with `@`
-            '^@/app',
-            '^@/shared',
-            // Imports starting with `../`
+            // Absolute imports and other imports such as `#/foo`.
+            // Anything not matched in another group.
+            '^',
+
+            // Relative imports starting with `../`
             '^\\.\\.(?!/?$)',
             '^\\.\\./?$',
-            // Imports starting with `./`
+
+            // Relative imports starting with `./`
             '^\\./(?=.*/)(?!/?$)',
             '^\\.(?!/?$)',
             '^\\./?$',
           ],
-          // Side effect imports
-          ['^\\u0000'],
         ],
       },
     ],
