@@ -26,7 +26,7 @@ jobs:
         run: npm ci
 
       - name: 🔦 Code type checking
-        run: npm run tsc
+        run: npm run type-check
 
       - name: 🔦 Code linting
         run: npm run lint:fix

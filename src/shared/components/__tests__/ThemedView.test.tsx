@@ -1,11 +1,11 @@
-import { expect, it } from '@jest/globals';
 import { render } from '@testing-library/react-native';
+import * as React from 'react';
 
-import { MonoText } from '../StyledText';
+import { ThemedView } from '../ThemedView';
 
 it(`renders correctly`, () => {
   // Arrange
-  const tree = render(<MonoText>Snapshot test!</MonoText>).toJSON();
+  const tree = render(<ThemedView>Snapshot test!</ThemedView>).toJSON();
 
   // Act
 
