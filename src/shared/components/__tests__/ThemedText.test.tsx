@@ -1,10 +1,11 @@
 import { render } from '@testing-library/react-native';
+import * as React from 'react';
 
-import EditScreenInfo from '../EditScreenInfo';
+import { ThemedText } from '../ThemedText';
 
 it(`renders correctly`, () => {
   // Arrange
-  const tree = render(<EditScreenInfo path="some-path" />).toJSON();
+  const tree = render(<ThemedText>Snapshot test!</ThemedText>).toJSON();
 
   // Act
 

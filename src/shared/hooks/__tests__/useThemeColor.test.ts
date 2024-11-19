@@ -23,7 +23,7 @@ describe('useThemeColor', () => {
 
   it.each<{ theme: ColorSchemeName; expected: ColorValue }>([
     { theme: 'light', expected: '#fff' },
-    { theme: 'dark', expected: '#000' },
+    { theme: 'dark', expected: '#151718' },
   ])(
     'should return the correct theme color for theme `$theme` when props are provided',
     ({ theme, expected }) => {

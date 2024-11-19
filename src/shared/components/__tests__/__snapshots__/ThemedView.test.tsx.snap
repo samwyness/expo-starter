@@ -1,21 +1,16 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`renders correctly 1`] = `
-<Text
+<View
   style={
     [
       {
-        "color": "#000",
+        "backgroundColor": "#fff",
       },
-      [
-        undefined,
-        {
-          "fontFamily": "SpaceMono",
-        },
-      ],
+      undefined,
     ]
   }
 >
   Snapshot test!
-</Text>
+</View>
 `;
