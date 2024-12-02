@@ -10,7 +10,7 @@
     "android": "expo run:android",
     "ios": "expo run:ios",
     "web": "expo start --web",
-    "lint": "expo lint",
+    "lint": "eslint --cache --ext .js,.jsx,.ts,.tsx src",
     "lint:fix": "npm run lint -- --fix",
     "type-check": "tsc",
     "test": "NODE_ENV=test jest",
