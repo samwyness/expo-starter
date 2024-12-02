@@ -1,9 +1,13 @@
 module.exports = {
   root: true,
-  extends: ['universe/native'],
-  plugins: ['react-native', 'simple-import-sort'],
+  extends: ['expo', 'prettier'],
+  plugins: [
+    'prettier',
+    'react-native',
+    'simple-import-sort',
+  ],
   rules: {
-    'import/order': 'off', // Included with eslint-config-universe
+    'prettier/prettier': 'error',
     'simple-import-sort/imports': [
       'warn',
       {
