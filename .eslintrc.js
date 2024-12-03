@@ -1,3 +1,18 @@
+/**
+ * Creates a restricted zone for imports from a specific feature.
+ *
+ * e.g. src/features/foo should not import from src/features/bar, etc.
+ *
+ * @param {string} featureName
+ */
+function createFeatureZone(featureName) {
+  return {
+    target: `./src/features/${featureName}`,
+    from: `./src/features`,
+    except: [`./${featureName}`],
+  };
+}
+
 module.exports = {
   root: true,
   extends: ['expo', 'prettier'],
@@ -48,17 +63,8 @@ module.exports = {
       {
         zones: [
           // Disable cross-feature imports:
-          // eg. src/features/foo should not import from src/features/bar, etc.
-          {
-            target: './src/features/home',
-            from: './src/features',
-            except: ['./home'],
-          },
-          {
-            target: './src/features/explore',
-            from: './src/features',
-            except: ['./explore'],
-          },
+          createFeatureZone('home'),
+          createFeatureZone('explore'),
 
           // Enforce unidirectional codebase:
           // e.g. src/app can import from src/features but not the other way around, etc.
