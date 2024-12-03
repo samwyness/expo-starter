@@ -60,10 +60,21 @@ module.exports = {
             except: ['./explore'],
           },
 
+          // Enforce unidirectional codebase:
+          // e.g. src/app can import from src/features but not the other way around, etc.
+          {
+            target: './src/features',
+            from: './src/app',
+          },
+          {
+            target: ['./src/shared', './src/assets'],
+            from: ['./src/features', './src/app'],
+          },
         ],
       },
     ],
     'import/no-cycle': 'error',
+
     'react/react-in-jsx-scope': 'off',
 
     'react-hooks/rules-of-hooks': 'error',
