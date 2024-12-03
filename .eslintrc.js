@@ -43,7 +43,27 @@ module.exports = {
         ],
       },
     ],
+    'import/no-restricted-paths': [
+      'error',
+      {
+        zones: [
+          // Disable cross-feature imports:
+          // eg. src/features/foo should not import from src/features/bar, etc.
+          {
+            target: './src/features/home',
+            from: './src/features',
+            except: ['./home'],
+          },
+          {
+            target: './src/features/explore',
+            from: './src/features',
+            except: ['./explore'],
+          },
 
+        ],
+      },
+    ],
+    'import/no-cycle': 'error',
     'react/react-in-jsx-scope': 'off',
 
     'react-hooks/rules-of-hooks': 'error',
