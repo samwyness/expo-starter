@@ -5,9 +5,13 @@ module.exports = {
     'prettier',
     'react-native',
     'simple-import-sort',
+    'eslint-plugin-react-compiler',
   ],
   rules: {
     'prettier/prettier': 'error',
+
+    'react-compiler/react-compiler': 'error',
+
     'simple-import-sort/imports': [
       'warn',
       {
