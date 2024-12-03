@@ -2,7 +2,8 @@ import { render, userEvent } from '@testing-library/react-native';
 import { renderRouter, screen } from 'expo-router/testing-library';
 import { openBrowserAsync } from 'expo-web-browser';
 
-import { mockPlatform } from '../../../../__mocks__/react-native/Platform';
+import { mockPlatform } from '#/testing/mocks/platform';
+
 import { ExternalLink } from '../ExternalLink';
 
 jest.mock('expo-web-browser');
