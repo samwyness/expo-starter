@@ -1,5 +1,5 @@
 /**
- * Creates a restricted zone for imports from a specific feature.
+ * Create a restricted import zone for a specific feature.
  *
  * e.g. src/features/foo should not import from src/features/bar, etc.
  *
