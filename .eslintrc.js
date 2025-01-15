@@ -1,4 +1,9 @@
 /**
+ * NOTE: Add features directory names here.
+ */
+const FEATURE_DIRS = ['home', 'explore'];
+
+/**
  * Create a restricted import zone for a specific feature.
  *
  * e.g. src/features/foo should not import from src/features/bar, etc.
@@ -9,7 +14,10 @@ function createFeatureZone(featureName) {
   return {
     target: `./src/features/${featureName}`,
     from: `./src/features`,
-    except: [`./${featureName}`],
+    except: [
+      `./${featureName}`,
+      ...FEATURE_DIRS.map((dir) => `./${dir}/index.ts`),
+    ],
   };
 }
 
@@ -63,8 +71,7 @@ module.exports = {
       {
         zones: [
           // Disable cross-feature imports:
-          createFeatureZone('home'),
-          createFeatureZone('explore'),
+          ...FEATURE_DIRS.map((featureName) => createFeatureZone(featureName)),
 
           // Enforce unidirectional codebase:
           // e.g. src/app can import from src/features but not the other way around, etc.
