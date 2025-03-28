@@ -20,10 +20,7 @@
     "test:coverage": "NODE_ENV=test jest --coverage"
   },
   "jest": {
-    "preset": "jest-expo",
-    "setupFilesAfterEnv": [
-      "<rootDir>jest-setup.ts"
-    ]
+    "preset": "jest-expo"
   },
   "dependencies": {
     "@expo/vector-icons": "^14.0.2",
