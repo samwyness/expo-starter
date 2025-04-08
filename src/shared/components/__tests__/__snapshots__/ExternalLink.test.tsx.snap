@@ -2,7 +2,7 @@
 
 exports[`ExternalLink renders correctly 1`] = `
 <Text
-  href="some-href"
+  href="/"
   onPress={[Function]}
   role="link"
 >

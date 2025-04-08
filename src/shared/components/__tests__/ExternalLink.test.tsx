@@ -18,7 +18,7 @@ describe(`ExternalLink`, () => {
   it(`renders correctly`, () => {
     // Arrange
     const tree = render(
-      <ExternalLink href="some-href">Snapshot test!</ExternalLink>,
+      <ExternalLink href="/">Snapshot test!</ExternalLink>,
     ).toJSON();
 
     // Act
@@ -30,13 +30,13 @@ describe(`ExternalLink`, () => {
   it(`should open the native browser with the correct href`, async () => {
     // Arrange
     renderRouter(['index']);
-    render(<ExternalLink href="some-href">Snapshot test!</ExternalLink>);
+    render(<ExternalLink href="/">Snapshot test!</ExternalLink>);
 
     // Act
     await userEvent.press(screen.getByRole('link', { name: 'Snapshot test!' }));
 
     // Assert
-    expect(mockOpenBrowserAsync).toHaveBeenCalledWith('some-href');
+    expect(mockOpenBrowserAsync).toHaveBeenCalledWith('/');
   });
 
   it(`should handle onPress correctly for web`, async () => {
@@ -44,7 +44,7 @@ describe(`ExternalLink`, () => {
     mockPlatform('web', '1.0');
 
     renderRouter(['index']);
-    render(<ExternalLink href="some-href">Snapshot test!</ExternalLink>);
+    render(<ExternalLink href="/">Snapshot test!</ExternalLink>);
 
     // Act
     await userEvent.press(screen.getByRole('link', { name: 'Snapshot test!' }));
