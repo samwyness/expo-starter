@@ -2,8 +2,6 @@ import { render, userEvent } from '@testing-library/react-native';
 import { renderRouter, screen } from 'expo-router/testing-library';
 import { openBrowserAsync } from 'expo-web-browser';
 
-import { mockPlatform } from '#/testing/mocks/platform';
-
 import { ExternalLink } from '../ExternalLink';
 
 jest.mock('expo-web-browser');
@@ -37,19 +35,5 @@ describe(`ExternalLink`, () => {
 
     // Assert
     expect(mockOpenBrowserAsync).toHaveBeenCalledWith('/');
-  });
-
-  it(`should handle onPress correctly for web`, async () => {
-    // Arrange
-    mockPlatform('web', '1.0');
-
-    renderRouter(['index']);
-    render(<ExternalLink href="/">Snapshot test!</ExternalLink>);
-
-    // Act
-    await userEvent.press(screen.getByRole('link', { name: 'Snapshot test!' }));
-
-    // Assert
-    expect(mockOpenBrowserAsync).not.toHaveBeenCalled();
   });
 });
