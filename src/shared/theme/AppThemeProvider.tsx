@@ -22,10 +22,9 @@ type AppThemeContextType = {
   toggleTheme: () => void;
 };
 
-export const AppThemeContext = createContext<AppThemeContextType>({
-  theme: 'light',
-  toggleTheme: () => {},
-});
+export const AppThemeContext = createContext<AppThemeContextType | undefined>(
+  undefined,
+);
 
 export const AppThemeProvider = ({
   theme,

@@ -1,4 +1,11 @@
-import { render, screen, userEvent } from '@testing-library/react-native';
+import {
+  act,
+  render,
+  renderHook,
+  screen,
+  userEvent,
+  waitFor,
+} from '@testing-library/react-native';
 import { Text, View } from 'react-native';
 
 import { AppThemeProvider, useAppTheme } from '../AppThemeProvider';
@@ -79,5 +86,57 @@ describe('AppThemeProvider', () => {
     // Assert
     expect(rootView.props.style).toBeDefined();
     expect(styleKeys.some((k) => k.startsWith('--color-'))).toBe(true);
+  });
+});
+
+describe('useAppTheme', () => {
+  it('returns the current theme and toggle function', () => {
+    // Arrange
+    const { result } = renderHook(() => useAppTheme(), {
+      wrapper: AppThemeProvider,
+    });
+
+    // Act
+
+    // Assert
+    expect(result.current.theme).toBe('light');
+    expect(typeof result.current.toggleTheme).toBe('function');
+  });
+
+  it('throws if useAppTheme is used outside provider', () => {
+    // Arrange
+    let errorMessage = '';
+
+    // Act & Assert
+    try {
+      renderHook(() => useAppTheme());
+    } catch (e) {
+      if (e instanceof Error) {
+        errorMessage = e.message;
+      }
+    }
+    expect(errorMessage).toBe(
+      'useAppTheme must be used within an AppThemeProvider',
+    );
+  });
+
+  it('toggleTheme switches theme from light to dark', async () => {
+    // Arrange
+    const { result } = renderHook(() => useAppTheme(), {
+      wrapper: AppThemeProvider,
+    });
+
+    // Assert
+    expect(result.current.theme).toBe('light');
+
+    // Act
+    await act(async () => {
+      result.current.toggleTheme();
+    });
+
+    // Assert
+    await waitFor(() => {
+      expect(result.current.theme).toBe('dark');
+    });
   });
 });
