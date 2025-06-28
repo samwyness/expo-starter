@@ -1,23 +1,22 @@
-const { defineConfig } = require('eslint/config');
-
-const prettier = require('eslint-plugin-prettier');
-const reactNative = require('eslint-plugin-react-native');
-const simpleImportSort = require('eslint-plugin-simple-import-sort');
-const reactCompiler = require('eslint-plugin-react-compiler');
-const js = require('@eslint/js');
-
-const { FlatCompat } = require('@eslint/eslintrc');
+import { FlatCompat } from '@eslint/eslintrc';
+import js from '@eslint/js';
+import expoConfig from 'eslint-config-expo/flat.js';
+import eslintPluginPrettierRecommended from 'eslint-plugin-prettier/recommended';
+import reactCompiler from 'eslint-plugin-react-compiler';
+import reactNative from 'eslint-plugin-react-native';
+import simpleImportSort from 'eslint-plugin-simple-import-sort';
+import unusedImports from 'eslint-plugin-unused-imports';
+import fs from 'fs';
+import tseslint from 'typescript-eslint';
 
 const compat = new FlatCompat({
-  baseDirectory: __dirname,
+  baseDirectory: import.meta.dirname,
   recommendedConfig: js.configs.recommended,
   allConfig: js.configs.all,
 });
 
-/**
- * NOTE: Add features directory names here.
- */
-const FEATURE_DIRS = ['home', 'explore'];
+const FEATURE_SRC_DIR = './src/features';
+const FEATURE_DIRS = fs.readdirSync('./src/features');
 
 /**
  * Create a restricted import zone for a specific feature.
@@ -28,8 +27,8 @@ const FEATURE_DIRS = ['home', 'explore'];
  */
 function createFeatureZone(featureName) {
   return {
-    target: `./src/features/${featureName}`,
-    from: `./src/features`,
+    target: `${FEATURE_SRC_DIR}/${featureName}`,
+    from: FEATURE_SRC_DIR,
     except: [
       `./${featureName}`,
       ...FEATURE_DIRS.map((dir) => `./${dir}/index.ts`),
@@ -37,30 +36,70 @@ function createFeatureZone(featureName) {
   };
 }
 
-module.exports = defineConfig([
+export default tseslint.config(
+  expoConfig,
+  eslintPluginPrettierRecommended,
+  // tseslint.configs.recommendedTypeChecked,
   {
-    extends: compat.extends('expo', 'prettier'),
-
+    languageOptions: {
+      parserOptions: {
+        projectService: true,
+        tsconfigRootDir: import.meta.dirname,
+      },
+    },
+  },
+  {
+    files: ['**/*.js', '**/*.mjs'],
+    extends: [tseslint.configs.disableTypeChecked],
+  },
+  {
+    ignores: [],
     plugins: {
-      prettier,
       'react-compiler': reactCompiler,
       'react-native': reactNative,
       'simple-import-sort': simpleImportSort,
+      'unused-imports': unusedImports,
     },
-
     rules: {
-      'import/no-cycle': 'error',
-      'prettier/prettier': 'error',
+      'prettier/prettier': 'warn',
+
       'react-compiler/react-compiler': 'error',
+
       'react/react-in-jsx-scope': 'off',
+      'react/jsx-no-leaked-render': [
+        'error',
+        { validStrategies: ['coerce', 'ternary'] },
+      ],
+
       'react-native/no-unused-styles': 'warn',
       'react-native/no-inline-styles': 'warn',
       'react-native/no-color-literals': 'warn',
       'react-native/no-raw-text': 'off',
       'react-native/no-single-element-style-arrays': 'warn',
 
-      '@typescript-eslint/no-shadow': ['error'],
+      'unused-imports/no-unused-imports': 'error',
+      'unused-imports/no-unused-vars': [
+        'warn',
+        {
+          vars: 'all',
+          varsIgnorePattern: '^_',
+          args: 'after-used',
+          argsIgnorePattern: '^_',
+        },
+      ],
+
+      'no-unused-vars': 'off',
+      '@typescript-eslint/no-unused-vars': 'off',
+
       'no-shadow': 'off',
+      '@typescript-eslint/no-shadow': ['error'],
+
+      '@typescript-eslint/consistent-type-exports': 'error',
+      '@typescript-eslint/consistent-type-imports': 'error',
+      // '@typescript-eslint/no-floating-promises': 'warn',
+      '@typescript-eslint/prefer-nullish-coalescing': 'error',
+
+      'import/no-cycle': 'error',
 
       'simple-import-sort/imports': [
         'warn',
@@ -122,4 +161,4 @@ module.exports = defineConfig([
     files: ['**/__tests__/**/*.[jt]s?(x)', '**/?(*.)+(spec|test).[jt]s?(x)'],
     extends: compat.extends('plugin:testing-library/react'),
   },
-]);
+);
