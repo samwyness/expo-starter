@@ -3,9 +3,12 @@ import { Pressable, View } from 'react-native';
 
 import { Text } from './Text';
 
-type ButtonProps = PressableProps;
+type ButtonProps = PressableProps & {
+  label: string;
+  children?: never;
+};
 
-export function Button(props: ButtonProps) {
+export function Button({ label, ...props }: ButtonProps) {
   return (
     <Pressable
       className="mt-4 bg-primary rounded-full overflow-hidden"
@@ -13,9 +16,7 @@ export function Button(props: ButtonProps) {
       {({ pressed }) => (
         <View
           className={`flex-row items-center justify-center  p-4 ${pressed ? 'bg-onPrimary/10' : ''}`}>
-          <Text className={`${pressed ? 'text-onPrimary' : 'text-onPrimary'}`}>
-            Press Me
-          </Text>
+          <Text className="text-onPrimary">{label}</Text>
         </View>
       )}
     </Pressable>
