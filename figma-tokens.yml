@@ -1,0 +1,6 @@
+outputFilename: src/shared/theme/tokens
+outputTransform: group
+tokenFrames:
+  - colors
+  - typography
+  - spacing
