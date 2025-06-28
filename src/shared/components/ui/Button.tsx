@@ -14,7 +14,10 @@ type ButtonProps = (PressableProps & ButtonVariants) & {
 
 export function Button({ label, ...props }: ButtonProps) {
   return (
-    <Pressable className={buttonStyles(props)} {...props}>
+    <Pressable
+      accessibilityRole="button"
+      className={buttonStyles(props)}
+      {...props}>
       {({ pressed }) => (
         <View className={buttonStateLayerStyles({ ...props, pressed })}>
           <Text className={buttonTextStyles(props)}>{label}</Text>
