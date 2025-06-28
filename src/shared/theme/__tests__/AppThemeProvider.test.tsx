@@ -13,9 +13,9 @@ import { AppThemeProvider, useAppTheme } from '../AppThemeProvider';
 // Mock nativewind's useColorScheme with React state
 jest.mock('nativewind', () => {
   const React = jest.requireActual('react');
-  const actual = jest.requireActual('nativewind');
+  const nativewind = jest.requireActual('nativewind');
   return {
-    ...actual,
+    ...nativewind,
     useColorScheme: () => {
       const [colorScheme, setColorScheme] = React.useState('light');
       return { colorScheme, setColorScheme };
