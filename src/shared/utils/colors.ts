@@ -5,11 +5,28 @@
  * @param alpha The alpha value to apply to the returned RGBA value
  */
 export const hexToRgbRGBA = (hexColor: string, alpha = 1) => {
-  const r = parseInt(hexColor.slice(1, 3), 16);
-  const g = parseInt(hexColor.slice(3, 5), 16);
-  const b = parseInt(hexColor.slice(5, 7), 16);
+  const match = hexColor.match(/^#(?<hex>[0-9A-Fa-f]{3}|[0-9A-Fa-f]{6})$/);
+  if (!match || !match.groups) {
+    throw new Error('Invalid hex color format');
+  }
+
+  let hexValue = match.groups.hex;
+  if (hexValue.length === 3) {
+    hexValue = hexValue
+      .split('')
+      .map((c) => c + c)
+      .join('');
+  }
+
+  const num = parseInt(hexValue, 16);
+
+  const rgb = {
+    r: (num >> 16) & 0xff,
+    g: (num >> 8) & 0xff,
+    b: num & 0xff,
+  };
 
   const alphaChannel = alpha > 1 ? alpha / 100 : alpha;
 
-  return `rgba(${r}, ${g}, ${b}, ${alphaChannel})`;
+  return `rgba(${rgb.r}, ${rgb.g}, ${rgb.b}, ${alphaChannel})`;
 };
