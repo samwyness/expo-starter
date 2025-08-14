@@ -14,7 +14,7 @@ export function SignInScreen() {
   return (
     <View style={[s.flex_1, styles.screen]}>
       <Container style={[s.flex_1, s.align_center, s.justify_center, s.gap_md]}>
-        <Text bold size="titleLarge">
+        <Text weight="bold" size="titleLarge">
           Sign In Screen
         </Text>
         <Button title="Sign in" onPress={signIn} />

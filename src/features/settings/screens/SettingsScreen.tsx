@@ -38,7 +38,7 @@ export function SettingsScreen() {
   return (
     <BodyScrollView contentContainerStyle={s.flex_1}>
       <Container style={[s.flex_1, s.align_center, s.justify_center, s.gap_md]}>
-        <Text bold size="titleLarge">
+        <Text weight="bold" size="titleLarge">
           Settings Screen
         </Text>
 

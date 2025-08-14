@@ -41,9 +41,7 @@ export function Button({
       {({ pressed }) => (
         <View style={styles.stateLayer({ pressed })}>
           <View style={styles.buttonInner}>
-            <Text size="labelMedium" style={styles.title}>
-              {title}
-            </Text>
+            <Text style={styles.title}>{title}</Text>
           </View>
         </View>
       )}
@@ -108,12 +106,13 @@ const styles = StyleSheet.create((theme) => ({
     justifyContent: 'center',
     alignItems: 'center',
     gap: theme.spacing.xs,
-    paddingHorizontal: theme.space(4),
+    paddingHorizontal: theme.space(6),
   },
 
   title: {
-    fontWeight: 'bold',
-    textTransform: 'uppercase',
+    fontWeight: theme.fontWeights.medium,
+    fontSize: 14,
+    lineHeight: 20,
     textAlign: 'center',
 
     variants: {

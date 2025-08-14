@@ -14,7 +14,7 @@ export function OnboardingCompleteScreen() {
   return (
     <View style={s.flex_1}>
       <Container style={[s.flex_1, s.align_center, s.justify_center, s.gap_md]}>
-        <Text bold size="titleLarge">
+        <Text weight="bold" size="titleLarge">
           Onboarding Screen (2)
         </Text>
         <Button title="Continue" onPress={completeOnboarding} />

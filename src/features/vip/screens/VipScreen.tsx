@@ -7,7 +7,7 @@ export function VipScreen() {
   return (
     <BodyScrollView contentContainerStyle={s.flex_1}>
       <Container style={[s.flex_1, s.align_center, s.justify_center, s.gap_sm]}>
-        <Text bold size="titleLarge">
+        <Text weight="bold" size="titleLarge">
           VIP Screen
         </Text>
       </Container>

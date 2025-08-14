@@ -9,7 +9,7 @@ export function CreateAccountScreen() {
   return (
     <View style={styles.screen}>
       <Container style={[s.flex_1, s.align_center, s.justify_center]}>
-        <Text bold size="titleLarge">
+        <Text weight="bold" size="titleLarge">
           Create Account Screen
         </Text>
       </Container>
