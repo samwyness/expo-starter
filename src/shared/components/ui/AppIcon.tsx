@@ -1,11 +1,10 @@
+import type { ColorValue } from 'react-native';
 import type { SvgProps } from 'react-native-svg';
-
-import { useAppTheme } from '#/shared/theme/AppThemeProvider';
 
 type AppIconProps = {
   icon: React.ElementType<SvgProps>;
   size?: number;
-  color?: string;
+  color?: ColorValue;
 };
 
 export function AppIcon({
@@ -13,12 +12,6 @@ export function AppIcon({
   size = 24,
   color,
 }: AppIconProps) {
-  const { themeColors } = useAppTheme();
-  return (
-    <IconComponent
-      width={size}
-      height={size}
-      fill={color ?? themeColors.onSurface}
-    />
-  );
+  console.log({ color });
+  return <IconComponent width={size} height={size} fill={color} />;
 }

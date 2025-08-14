@@ -13,6 +13,7 @@ export type LineHeight = 'tight' | 'snug' | 'normal';
 
 export type LightThemeColor = keyof typeof tokens.colors.light;
 export type DarkThemeColor = keyof typeof tokens.colors.dark;
+export type ThemeColor = LightThemeColor | DarkThemeColor;
 
 const GRID_SPACING = tokens.spacing.xs;
 
