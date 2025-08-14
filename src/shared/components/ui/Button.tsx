@@ -1,117 +1,132 @@
-import type { VariantProps } from 'cva';
-import { cva } from 'cva';
-import type { PressableProps } from 'react-native';
+import * as Haptics from 'expo-haptics';
+import type {
+  GestureResponderEvent,
+  PressableProps,
+  ViewStyle,
+} from 'react-native';
 import { Pressable, View } from 'react-native';
+import type { UnistylesVariants } from 'react-native-unistyles';
+import { StyleSheet } from 'react-native-unistyles';
 
 import { Text } from './Text';
 
-type ButtonVariants = VariantProps<typeof buttonStyles>;
+type ButtonVariants = UnistylesVariants<typeof styles>;
 
 type ButtonProps = (PressableProps & ButtonVariants) & {
-  label: string;
+  title: string;
+  block?: boolean;
+  style?: ViewStyle;
   children?: never;
 };
 
-export function Button({ label, ...props }: ButtonProps) {
+export function Button({
+  title,
+  variant = 'filled',
+  block = false,
+  ...props
+}: ButtonProps) {
+  styles.useVariants({ variant, block });
+
+  const handlePress = async (e: GestureResponderEvent) => {
+    await Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Medium);
+    props.onPress?.(e);
+  };
+
   return (
     <Pressable
+      {...props}
       accessibilityRole="button"
-      className={buttonStyles(props)}
-      {...props}>
+      style={[styles.base, props.style]}
+      onPress={handlePress}>
       {({ pressed }) => (
-        <View className={buttonStateLayerStyles({ ...props, pressed })}>
-          <Text className={buttonTextStyles(props)}>{label}</Text>
+        <View style={styles.stateLayer({ pressed })}>
+          <View style={styles.buttonInner}>
+            <Text style={styles.title}>{title}</Text>
+          </View>
         </View>
       )}
     </Pressable>
   );
 }
 
-const buttonStyles = cva({
-  base: 'h-[52px] rounded-full overflow-hidden',
-  variants: {
-    variant: { filled: null, tonal: null, outline: null },
-    disabled: { true: null, false: null },
-  },
-  compoundVariants: [
-    {
-      variant: 'filled',
-      disabled: false,
-      className: 'bg-primary',
-    },
-    {
-      variant: 'tonal',
-      disabled: false,
-      className: 'bg-primaryContainer',
-    },
-    {
-      variant: 'outline',
-      disabled: false,
-      className: 'border-2 border-primary',
-    },
-    {
-      variant: ['filled', 'tonal', 'outline'],
-      disabled: true,
-      className: 'bg-outline',
-    },
-    {
-      variant: 'outline',
-      disabled: true,
-      className: 'border-outline',
-    },
-  ],
-  defaultVariants: {
-    variant: 'filled',
-    disabled: false,
-  },
-});
+const styles = StyleSheet.create((theme) => ({
+  base: {
+    height: 52,
+    borderRadius: 9999,
+    overflow: 'hidden',
 
-const buttonStateLayerStyles = cva({
-  base: 'flex-1 flex-row justify-center items-center gap-2 px-8',
-  variants: {
-    variant: { filled: null, tonal: null, outline: null },
-    pressed: { true: null, false: null },
+    variants: {
+      variant: {
+        filled: {
+          backgroundColor: theme.colors.primary,
+        },
+        filledTonal: {
+          backgroundColor: theme.colors.primaryContainer,
+        },
+        outlined: {
+          borderColor: theme.colors.outline,
+          borderWidth: 2,
+        },
+      },
+      block: {
+        true: {
+          width: '100%',
+        },
+      },
+    },
   },
-  compoundVariants: [
-    {
-      variant: 'filled',
-      pressed: true,
-      className: 'bg-onPrimary/10',
-    },
-    {
-      variant: 'tonal',
-      pressed: true,
-      className: 'bg-onPrimaryContainer/10',
-    },
-    {
-      variant: 'outline',
-      pressed: true,
-      className: 'bg-primary/10',
-    },
-  ],
-  defaultVariants: {
-    variant: 'filled',
-  },
-});
 
-const buttonTextStyles = cva({
-  base: 'text-md font-bold uppercase text-center',
-  variants: {
-    variant: {
-      filled: 'text-onPrimary',
-      tonal: 'text-onPrimaryContainer',
-      outline: 'text-onSurface',
+  stateLayer: ({ pressed }: { pressed: boolean }) => ({
+    flex: 1,
+
+    variants: {
+      variant: {
+        filled: {
+          backgroundColor: pressed
+            ? theme.rgbaColor('onPrimary', 10)
+            : undefined,
+        },
+        filledTonal: {
+          backgroundColor: pressed
+            ? theme.rgbaColor('onPrimaryContainer', 10)
+            : undefined,
+        },
+        outlined: {
+          backgroundColor: pressed
+            ? theme.rgbaColor('onSurface', 10)
+            : undefined,
+        },
+      },
     },
-    disabled: { true: null, false: null },
+  }),
+
+  buttonInner: {
+    flex: 1,
+    flexDirection: 'row',
+    justifyContent: 'center',
+    alignItems: 'center',
+    gap: theme.spacing.xs,
+    paddingHorizontal: theme.space(6),
   },
-  compoundVariants: [
-    {
-      variant: ['filled', 'tonal', 'outline'],
-      disabled: true,
-      className: 'text-outlineVariant',
+
+  title: {
+    fontWeight: theme.fontWeights.medium,
+    fontSize: 14,
+    lineHeight: 20,
+    textAlign: 'center',
+
+    variants: {
+      variant: {
+        filled: {
+          color: theme.colors.onPrimary,
+        },
+        filledTonal: {
+          color: theme.colors.onPrimaryContainer,
+        },
+        outlined: {
+          color: theme.colors.onSurface,
+        },
+      },
     },
-  ],
-  defaultVariants: {
-    variant: 'filled',
   },
-});
+}));

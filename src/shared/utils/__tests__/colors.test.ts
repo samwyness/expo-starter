@@ -1,51 +1,38 @@
-import { hexToRgb, rgbObjectToString } from '../colors';
+import { hexToRgbRGBA } from '../colors';
 
-describe('colors utility functions', () => {
-  describe('hexToRgb', () => {
-    it('should convert hex color to RGB', () => {
-      expect(hexToRgb('#FF5733')).toEqual({ r: 255, g: 87, b: 51 });
-      expect(hexToRgb('#F53')).toEqual({ r: 255, g: 85, b: 51 });
-      expect(hexToRgb('#000000')).toEqual({ r: 0, g: 0, b: 0 });
-      expect(hexToRgb('#FFFFFF')).toEqual({ r: 255, g: 255, b: 255 });
-    });
+describe('hexToRgbRGBA', () => {
+  it('should convert hex color to rgba with default alpha', () => {
+    // Arrange
+    const hexColor = '#ff5733';
 
-    it('should throw an error for invalid hex format', () => {
-      expect(() => hexToRgb('#GGG')).toThrow('Invalid hex color format');
-      expect(() => hexToRgb('123456')).toThrow('Invalid hex color format');
-      expect(() => hexToRgb('#12345')).toThrow('Invalid hex color format');
-    });
+    // Act
+    const result = hexToRgbRGBA(hexColor);
+
+    // Assert
+    expect(result).toBe('rgba(255, 87, 51, 1)');
   });
 
-  describe('rgbObjectToString', () => {
-    it('should convert RGB object to string', () => {
-      expect(rgbObjectToString({ r: 255, g: 87, b: 51 })).toBe(
-        'rgb(255, 87, 51)',
-      );
-      expect(rgbObjectToString({ r: 0, g: 0, b: 0 })).toBe('rgb(0, 0, 0)');
-      expect(rgbObjectToString({ r: 255, g: 255, b: 255 })).toBe(
-        'rgb(255, 255, 255)',
-      );
-    });
+  it('should convert hex color to rgba with provided alpha less than 1', () => {
+    // Arrange
+    const hexColor = '#00ff00';
+    const alpha = 0.5;
 
-    it('should throw an error for out of range RGB values', () => {
-      expect(() => rgbObjectToString({ r: -1, g: 0, b: 0 })).toThrow(
-        'RGB values must be between 0 and 255',
-      );
-      expect(() => rgbObjectToString({ r: 256, g: 0, b: 0 })).toThrow(
-        'RGB values must be between 0 and 255',
-      );
-      expect(() => rgbObjectToString({ r: 0, g: -1, b: 0 })).toThrow(
-        'RGB values must be between 0 and 255',
-      );
-      expect(() => rgbObjectToString({ r: 0, g: 256, b: 0 })).toThrow(
-        'RGB values must be between 0 and 255',
-      );
-      expect(() => rgbObjectToString({ r: 0, g: 0, b: -1 })).toThrow(
-        'RGB values must be between 0 and 255',
-      );
-      expect(() => rgbObjectToString({ r: 0, g: 0, b: 256 })).toThrow(
-        'RGB values must be between 0 and 255',
-      );
-    });
+    // Act
+    const result = hexToRgbRGBA(hexColor, alpha);
+
+    // Assert
+    expect(result).toBe('rgba(0, 255, 0, 0.5)');
+  });
+
+  it('should convert hex color to rgba with provided alpha greater than 1 (percentage)', () => {
+    // Arrange
+    const hexColor = '#0000ff';
+    const alpha = 50;
+
+    // Act
+    const result = hexToRgbRGBA(hexColor, alpha);
+
+    // Assert
+    expect(result).toBe('rgba(0, 0, 255, 0.5)');
   });
 });

@@ -1,23 +1,22 @@
 import 'react-native-reanimated'; // Must come first!
-import '#/shared/theme/global.css';
 
-import FontAwesome from '@expo/vector-icons/FontAwesome';
 import { ThemeProvider as NavigationThemeProvider } from '@react-navigation/native';
 import { useFonts } from 'expo-font';
 import { Stack } from 'expo-router';
 import * as SplashScreen from 'expo-splash-screen';
 import { StatusBar } from 'expo-status-bar';
-import { useColorScheme } from 'nativewind';
-import { useEffect } from 'react';
+import React from 'react';
+import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 
+import { useAuthStore } from '#/shared/stores/authStore';
+import { useOnboardingStore } from '#/shared/stores/onboardingStore';
 import { AppThemeProvider } from '#/shared/theme/AppThemeProvider';
-import { getNavigationTheme } from '#/shared/theme/navigationTheme';
+import { useNavigationTheme } from '#/shared/theme/navigationTheme';
+import { s } from '#/shared/theme/styles';
 
-export {
-  // Catch any errors thrown by the Layout component.
-  ErrorBoundary,
-} from 'expo-router';
+// Catch any errors thrown by the Layout component.
+export { ErrorBoundary } from 'expo-router';
 
 export const unstable_settings = {
   // Ensure that reloading on `/modal` keeps a back button present.
@@ -27,40 +26,80 @@ export const unstable_settings = {
 // Prevent the splash screen from auto-hiding before asset loading is complete.
 SplashScreen.preventAutoHideAsync();
 
+function RootLayoutStack() {
+  const hasAuthHydrated = useAuthStore((state) => state._hasHydrated);
+  const isLoggedIn = useAuthStore((state) => state.isLoggedIn);
+  const shouldCreateAccount = useAuthStore(
+    (state) => state.shouldCreateAccount,
+  );
+
+  const hasOnboardingHydrated = useOnboardingStore(
+    (state) => state._hasHydrated,
+  );
+  const hasCompletedOnboarding = useOnboardingStore(
+    (state) => state.hasCompletedOnboarding,
+  );
+
+  const hasAppHydrated = hasAuthHydrated && hasOnboardingHydrated;
+
+  React.useEffect(() => {
+    if (hasAppHydrated) {
+      SplashScreen.hideAsync();
+    }
+  }, [hasAppHydrated]);
+
+  if (!hasAppHydrated) {
+    return null;
+  }
+
+  return (
+    <Stack screenOptions={{ headerShown: false }}>
+      <Stack.Protected guard={Boolean(isLoggedIn) && hasCompletedOnboarding}>
+        <Stack.Screen name="(tabs)" />
+      </Stack.Protected>
+
+      <Stack.Protected guard={!isLoggedIn && hasCompletedOnboarding}>
+        <Stack.Screen name="sign-in" />
+        <Stack.Protected guard={shouldCreateAccount}>
+          <Stack.Screen name="create-account" />
+        </Stack.Protected>
+      </Stack.Protected>
+
+      <Stack.Protected guard={!hasCompletedOnboarding}>
+        <Stack.Screen name="onboarding" />
+      </Stack.Protected>
+
+      <Stack.Screen name="+not-found" />
+    </Stack>
+  );
+}
+
 export default function RootLayout() {
-  const { colorScheme } = useColorScheme();
+  const navigationTheme = useNavigationTheme();
+
   const [loaded, error] = useFonts({
-    ...FontAwesome.font,
+    // Load font here
   });
 
   // Expo Router uses Error Boundaries to catch errors in the navigation tree.
-  useEffect(() => {
+  React.useEffect(() => {
     if (error) throw error;
   }, [error]);
-
-  useEffect(() => {
-    if (loaded) {
-      SplashScreen.hideAsync();
-    }
-  }, [loaded]);
 
   if (!loaded) {
     return null;
   }
 
   return (
-    <SafeAreaProvider>
-      <AppThemeProvider>
-        <NavigationThemeProvider
-          value={getNavigationTheme(colorScheme ?? 'light')}>
-          <StatusBar style="auto" />
-          <Stack>
-            <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
-            <Stack.Screen name="modal" options={{ presentation: 'modal' }} />
-            <Stack.Screen name="+not-found" />
-          </Stack>
-        </NavigationThemeProvider>
-      </AppThemeProvider>
-    </SafeAreaProvider>
+    <GestureHandlerRootView style={s.flex_1}>
+      <SafeAreaProvider>
+        <AppThemeProvider>
+          <NavigationThemeProvider value={navigationTheme}>
+            <StatusBar style="auto" />
+            <RootLayoutStack />
+          </NavigationThemeProvider>
+        </AppThemeProvider>
+      </SafeAreaProvider>
+    </GestureHandlerRootView>
   );
 }

@@ -1,8 +1,37 @@
 import type { TextProps as RNTextProps } from 'react-native';
 import { Text as RNText } from 'react-native';
+import { StyleSheet } from 'react-native-unistyles';
 
-type TextProps = RNTextProps;
+import type { FontSize, FontWeight } from '../../../../unistyles';
 
-export function Text(props: TextProps) {
-  return <RNText className="text-base text-onSurface" {...props} />;
+type TextProps = RNTextProps & {
+  size?: FontSize;
+  weight?: FontWeight;
+  center?: boolean;
+};
+
+export function Text({
+  size = 'bodyMedium',
+  weight = 'normal',
+  center = false,
+  ...props
+}: TextProps) {
+  return (
+    <RNText
+      {...props}
+      style={[styles.base(size, weight), center && styles.center, props.style]}
+    />
+  );
 }
+
+const styles = StyleSheet.create((theme) => ({
+  base: (size: FontSize, weight: FontWeight) => ({
+    color: theme.colors.onSurface,
+    fontWeight: theme.fontWeights[weight],
+    fontSize: theme.fontSize(size),
+    lineHeight: theme.lineHeight(size, 'normal'),
+  }),
+  center: {
+    textAlign: 'center',
+  },
+}));
