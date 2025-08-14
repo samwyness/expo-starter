@@ -1,17 +1,16 @@
 import { StatusBar } from 'expo-status-bar';
-import { useColorScheme, vars } from 'nativewind';
 import type { PropsWithChildren } from 'react';
-import React, { createContext, useContext, useEffect } from 'react';
-import { View } from 'react-native';
+import React, { createContext, useContext } from 'react';
+import type { UnistylesThemes } from 'react-native-unistyles';
+import { UnistylesRuntime } from 'react-native-unistyles';
 
-import { hexToRgb, rgbObjectToString } from '../utils/colors';
-import tokensJson from './tokens.json';
+import tokensJson from '../theme/tokens.json';
 
 const colors = tokensJson.colors;
 
 export type AppColor = keyof typeof colors.light | keyof typeof colors.dark;
 
-export type AppTheme = 'light' | 'dark';
+export type AppTheme = keyof UnistylesThemes;
 
 type AppThemeProviderProps = PropsWithChildren<{
   theme?: AppTheme;
@@ -19,6 +18,7 @@ type AppThemeProviderProps = PropsWithChildren<{
 
 type AppThemeContextType = {
   theme: AppTheme;
+  themeColors: typeof colors.light;
   toggleTheme: () => void;
 };
 
@@ -30,39 +30,23 @@ export const AppThemeProvider = ({
   theme,
   children,
 }: AppThemeProviderProps) => {
-  const { colorScheme, setColorScheme } = useColorScheme();
-  const currentTheme = theme ?? colorScheme ?? 'light';
-
-  // Compute CSS vars for the current theme
-  const themeColors = Object.entries(colors[currentTheme])
-    .map(([key, value]) => {
-      return [key, rgbObjectToString(hexToRgb(value))] as const;
-    })
-    .reduce(
-      (acc, [key, value]) => {
-        acc[`--color-${key}`] = value.replace('rgb(', '').replace(')', '');
-        return acc;
-      },
-      {} as Record<string, string>,
-    );
+  const [currentTheme, setCurrentTheme] = React.useState<AppTheme>(
+    theme ?? UnistylesRuntime.themeName ?? 'light',
+  );
 
   const toggleTheme = () => {
-    setColorScheme(currentTheme === 'light' ? 'dark' : 'light');
+    setCurrentTheme((prevTheme) => (prevTheme === 'light' ? 'dark' : 'light'));
   };
 
-  // Sync with system color scheme
-  useEffect(() => {
-    if (colorScheme && colorScheme !== currentTheme) {
-      setColorScheme(colorScheme);
-    }
-  }, [colorScheme, currentTheme, setColorScheme]);
-
   return (
-    <AppThemeContext.Provider value={{ theme: currentTheme, toggleTheme }}>
+    <AppThemeContext.Provider
+      value={{
+        theme: currentTheme,
+        themeColors: colors[currentTheme],
+        toggleTheme,
+      }}>
       <StatusBar style={currentTheme === 'dark' ? 'light' : 'dark'} />
-      <View style={vars(themeColors)} className="flex-1">
-        {children}
-      </View>
+      {children}
     </AppThemeContext.Provider>
   );
 };

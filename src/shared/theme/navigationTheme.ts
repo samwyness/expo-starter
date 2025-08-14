@@ -1,21 +1,19 @@
 import { DefaultTheme } from '@react-navigation/native';
+import { useUnistyles } from 'react-native-unistyles';
 
-import type { AppTheme } from './AppThemeProvider';
-import tokensJson from './tokens.json';
+export function useNavigationTheme() {
+  const { theme, rt } = useUnistyles();
 
-const colors = tokensJson.colors;
-
-export function getNavigationTheme(appTheme: AppTheme) {
   return {
     ...DefaultTheme,
-    dark: appTheme === 'dark',
+    dark: rt.themeName === 'dark',
     colors: {
-      primary: colors[appTheme].primary,
-      background: colors[appTheme].surfaceContainerLow,
-      card: colors[appTheme].surfaceContainer,
-      text: colors[appTheme].onSurface,
-      border: colors[appTheme].outlineVariant,
-      notification: colors[appTheme].primary,
+      primary: theme.colors.primary,
+      background: theme.colors.surfaceContainerLow,
+      card: theme.colors.surfaceContainer,
+      text: theme.colors.onSurface,
+      border: theme.colors.outlineVariant,
+      notification: theme.colors.primary,
     },
   };
 }
