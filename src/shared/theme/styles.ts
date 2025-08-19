@@ -1,4 +1,4 @@
-import { type StyleProp, StyleSheet, type ViewStyle } from 'react-native';
+import { StyleSheet } from 'react-native';
 
 import { ios, native, platform, web } from '../utils/platform';
 import tokens from './tokens.json';
@@ -91,21 +91,8 @@ export const atoms = {
     maxHeight: '100%',
   },
 
-  /**
-   * Used for the outermost components on screens, to ensure that they can fill
-   * the screen and extend beyond.
-   */
-  util_screen_outer: [
-    web({
-      minHeight: '100vh',
-    }),
-    native({
-      height: '100%',
-    }),
-  ] as StyleProp<ViewStyle>,
-
   /*
-   * Theme-independent bg colors
+   * Theme-independent background colors
    */
   bg_transparent: {
     backgroundColor: 'transparent',

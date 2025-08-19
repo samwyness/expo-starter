@@ -2,7 +2,7 @@ import type { TextProps as RNTextProps } from 'react-native';
 import { Text as RNText } from 'react-native';
 import { StyleSheet } from 'react-native-unistyles';
 
-import type { FontSize, FontWeight } from '../../../../unistyles';
+import type { FontSize, FontWeight } from '#/lib/unistyles';
 
 type TextProps = RNTextProps & {
   size?: FontSize;
@@ -28,7 +28,7 @@ const styles = StyleSheet.create((theme) => ({
   base: (size: FontSize, weight: FontWeight) => ({
     color: theme.colors.onSurface,
     fontWeight: theme.fontWeights[weight],
-    fontSize: theme.fontSize(size),
+    fontSize: theme.fontSize[size],
     lineHeight: theme.lineHeight(size, 'normal'),
   }),
   center: {

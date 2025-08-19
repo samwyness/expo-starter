@@ -54,19 +54,19 @@ function RootLayoutStack() {
 
   return (
     <Stack screenOptions={{ headerShown: false }}>
-      <Stack.Protected guard={Boolean(isLoggedIn) && hasCompletedOnboarding}>
+      <Stack.Protected guard={!!hasCompletedOnboarding && isLoggedIn}>
         <Stack.Screen name="(tabs)" />
       </Stack.Protected>
 
-      <Stack.Protected guard={!isLoggedIn && hasCompletedOnboarding}>
+      <Stack.Protected guard={!hasCompletedOnboarding && isLoggedIn}>
+        <Stack.Screen name="onboarding" />
+      </Stack.Protected>
+
+      <Stack.Protected guard={!isLoggedIn}>
         <Stack.Screen name="sign-in" />
         <Stack.Protected guard={shouldCreateAccount}>
           <Stack.Screen name="create-account" />
         </Stack.Protected>
-      </Stack.Protected>
-
-      <Stack.Protected guard={!hasCompletedOnboarding}>
-        <Stack.Screen name="onboarding" />
       </Stack.Protected>
 
       <Stack.Screen name="+not-found" />

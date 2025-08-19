@@ -1,19 +1,7 @@
 import { StyleSheet } from 'react-native-unistyles';
 
+import tokens from '#/shared/theme/tokens.json';
 import { hexToRgbRGBA } from '#/shared/utils/colors';
-
-import tokens from './src/shared/theme/tokens.json';
-
-export type FontSize =
-  | keyof typeof tokens.typography.base
-  | keyof typeof tokens.typography.title;
-
-export type FontWeight = 'normal' | 'medium' | 'bold' | 'heavy';
-export type LineHeight = 'tight' | 'snug' | 'normal';
-
-export type LightThemeColor = keyof typeof tokens.colors.light;
-export type DarkThemeColor = keyof typeof tokens.colors.dark;
-export type ThemeColor = LightThemeColor | DarkThemeColor;
 
 const GRID_SPACING = tokens.spacing.xs;
 
@@ -23,15 +11,25 @@ const FONT_WEIGHTS = {
   bold: '600',
   heavy: '800',
 } as const;
+
 const FONT_SIZES = {
   ...tokens.typography.base,
   ...tokens.typography.title,
 } as const;
+
 const LINE_HEIGHTS = {
   tight: 1.15,
   snug: 1.3,
   normal: 1.5,
 } as const;
+
+export type FontWeight = keyof typeof FONT_WEIGHTS;
+export type FontSize = keyof typeof FONT_SIZES;
+export type LineHeight = keyof typeof LINE_HEIGHTS;
+
+export type ThemeColor =
+  | keyof typeof tokens.colors.light
+  | keyof typeof tokens.colors.dark;
 
 const sharedTheme = {
   /**
@@ -39,15 +37,12 @@ const sharedTheme = {
    */
   spacing: tokens.spacing,
   space: (v: number) => v * GRID_SPACING,
-  gap: (v: number) => v * GRID_SPACING,
 
   /**
    * Typography
    */
   fontWeights: FONT_WEIGHTS,
-  fontSize: (fontSize: FontSize) => {
-    return FONT_SIZES[fontSize];
-  },
+  fontSize: FONT_SIZES,
   lineHeight: (fontSize: FontSize, lineHeight: LineHeight) => {
     return FONT_SIZES[fontSize] * LINE_HEIGHTS[lineHeight];
   },
@@ -56,14 +51,14 @@ const sharedTheme = {
 const lightTheme = {
   ...sharedTheme,
   colors: tokens.colors.light,
-  rgbaColor: (color: LightThemeColor, alpha: number) =>
+  rgbaColor: (color: ThemeColor, alpha: number) =>
     hexToRgbRGBA(tokens.colors.light[color], alpha),
 } as const;
 
 const darkTheme = {
   ...sharedTheme,
   colors: tokens.colors.dark,
-  rgbaColor: (color: DarkThemeColor, alpha: number) =>
+  rgbaColor: (color: ThemeColor, alpha: number) =>
     hexToRgbRGBA(tokens.colors.dark[color], alpha),
 } as const;
 
@@ -80,8 +75,8 @@ const breakpoints = {
   xl: 1200,
 };
 
-type AppBreakpoints = typeof breakpoints;
-type AppThemes = typeof appThemes;
+export type AppBreakpoints = typeof breakpoints;
+export type AppThemes = typeof appThemes;
 
 declare module 'react-native-unistyles' {
   export interface UnistylesThemes extends AppThemes {}
@@ -90,7 +85,6 @@ declare module 'react-native-unistyles' {
 
 StyleSheet.configure({
   settings: {
-    // initialTheme: 'light',
     adaptiveThemes: true,
   },
   breakpoints,
