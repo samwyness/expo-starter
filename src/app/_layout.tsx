@@ -58,7 +58,7 @@ function RootLayoutStack() {
         <Stack.Screen name="(tabs)" />
       </Stack.Protected>
 
-      <Stack.Protected guard={!hasCompletedOnboarding && isLoggedIn}>
+      <Stack.Protected guard={!hasCompletedOnboarding}>
         <Stack.Screen name="onboarding" />
       </Stack.Protected>
 
