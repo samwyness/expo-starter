@@ -9,6 +9,7 @@ export default {
   newArchEnabled: true,
   ios: {
     supportsTablet: true,
+    usesNonExemptEncryption: false,
     bundleIdentifier: 'com.samwyness.expostarter',
   },
   android: {
@@ -25,8 +26,21 @@ export default {
     favicon: './src/assets/images/favicon.png',
   },
   plugins: [
+    [
+      'expo-local-authentication',
+      {
+        faceIDPermission: 'Allow $(PRODUCT_NAME) to use Face ID.',
+      },
+    ],
     'expo-router',
-    'expo-secure-store',
+    [
+      'expo-secure-store',
+      {
+        configureAndroidBackup: true,
+        faceIDPermission:
+          'Allow $(PRODUCT_NAME) to access your Face ID biometric data.',
+      },
+    ],
     [
       'expo-splash-screen',
       {

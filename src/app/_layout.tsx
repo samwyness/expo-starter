@@ -1,5 +1,6 @@
 import 'react-native-reanimated'; // Must come first!
 
+import { useAuth } from '@clerk/clerk-expo';
 import { ThemeProvider as NavigationThemeProvider } from '@react-navigation/native';
 import { useFonts } from 'expo-font';
 import { Stack } from 'expo-router';
@@ -9,7 +10,7 @@ import React from 'react';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 
-import { useAuthStore } from '#/shared/stores/authStore';
+import AuthProvider from '#/shared/components/providers/AuthProvider';
 import { useOnboardingStore } from '#/shared/stores/onboardingStore';
 import { AppThemeProvider } from '#/shared/theme/AppThemeProvider';
 import { useNavigationTheme } from '#/shared/theme/navigationTheme';
@@ -27,11 +28,7 @@ export const unstable_settings = {
 SplashScreen.preventAutoHideAsync();
 
 function RootLayoutStack() {
-  const hasAuthHydrated = useAuthStore((state) => state._hasHydrated);
-  const isLoggedIn = useAuthStore((state) => state.isLoggedIn);
-  const shouldCreateAccount = useAuthStore(
-    (state) => state.shouldCreateAccount,
-  );
+  const { isSignedIn, isLoaded } = useAuth();
 
   const hasOnboardingHydrated = useOnboardingStore(
     (state) => state._hasHydrated,
@@ -40,7 +37,7 @@ function RootLayoutStack() {
     (state) => state.hasCompletedOnboarding,
   );
 
-  const hasAppHydrated = hasAuthHydrated && hasOnboardingHydrated;
+  const hasAppHydrated = isLoaded && hasOnboardingHydrated;
 
   React.useEffect(() => {
     if (hasAppHydrated) {
@@ -54,7 +51,7 @@ function RootLayoutStack() {
 
   return (
     <Stack screenOptions={{ headerShown: false }}>
-      <Stack.Protected guard={!!hasCompletedOnboarding && isLoggedIn}>
+      <Stack.Protected guard={!!hasCompletedOnboarding && isSignedIn}>
         <Stack.Screen name="(tabs)" />
       </Stack.Protected>
 
@@ -62,11 +59,9 @@ function RootLayoutStack() {
         <Stack.Screen name="onboarding" />
       </Stack.Protected>
 
-      <Stack.Protected guard={!isLoggedIn}>
+      <Stack.Protected guard={!isSignedIn}>
         <Stack.Screen name="sign-in" />
-        <Stack.Protected guard={shouldCreateAccount}>
-          <Stack.Screen name="create-account" />
-        </Stack.Protected>
+        <Stack.Screen name="create-account" />
       </Stack.Protected>
 
       <Stack.Screen name="+not-found" />
@@ -96,7 +91,9 @@ export default function RootLayout() {
         <AppThemeProvider>
           <NavigationThemeProvider value={navigationTheme}>
             <StatusBar style="auto" />
-            <RootLayoutStack />
+            <AuthProvider>
+              <RootLayoutStack />
+            </AuthProvider>
           </NavigationThemeProvider>
         </AppThemeProvider>
       </SafeAreaProvider>
