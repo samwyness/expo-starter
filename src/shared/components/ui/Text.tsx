@@ -2,7 +2,7 @@ import type { TextProps as RNTextProps } from 'react-native';
 import { Text as RNText } from 'react-native';
 import { StyleSheet } from 'react-native-unistyles';
 
-import type { FontSize, FontWeight } from '#/lib/unistyles';
+import type { FontSize, FontWeight } from '../../../../unistyles';
 
 type TextProps = RNTextProps & {
   size?: FontSize;
