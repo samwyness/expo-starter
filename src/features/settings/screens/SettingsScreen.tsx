@@ -1,10 +1,10 @@
 import { useFocusEffect } from 'expo-router';
 
+import { tryAsync } from '#/lib/result';
 import { BodyScrollView } from '#/shared/components/ui/BodyScrollView';
 import { Button } from '#/shared/components/ui/Button';
 import { Container } from '#/shared/components/ui/Container';
 import { Text } from '#/shared/components/ui/Text';
-import { tryAsync } from '#/shared/lib/result';
 import { useAuthStore } from '#/shared/stores/authStore';
 import { useOnboardingStore } from '#/shared/stores/onboardingStore';
 import { s } from '#/shared/theme/styles';
