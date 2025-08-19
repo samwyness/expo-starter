@@ -42,8 +42,20 @@ export function SettingsScreen() {
           Settings Screen
         </Text>
 
-        <Button title="Reset onboarding" onPress={resetOnboarding} />
         <Button title="Sign out" onPress={signOut} />
+        <Button
+          title="Reset onboarding"
+          variant="errorTonal"
+          onPress={resetOnboarding}
+        />
+        <Button
+          title="Clear cache"
+          variant="errorFilled"
+          onPress={() => {
+            signOut();
+            resetOnboarding();
+          }}
+        />
       </Container>
     </BodyScrollView>
   );

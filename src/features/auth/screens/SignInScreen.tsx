@@ -26,6 +26,6 @@ export function SignInScreen() {
 
 const styles = StyleSheet.create((theme) => ({
   screen: {
-    gap: theme.gap(5),
+    gap: theme.space(5),
   },
 }));

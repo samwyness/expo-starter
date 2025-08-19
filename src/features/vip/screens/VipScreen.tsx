@@ -1,3 +1,6 @@
+import { TextInput } from 'react-native';
+import { StyleSheet } from 'react-native-unistyles';
+
 import { BodyScrollView } from '#/shared/components/ui/BodyScrollView';
 import { Container } from '#/shared/components/ui/Container';
 import { Text } from '#/shared/components/ui/Text';
@@ -10,7 +13,17 @@ export function VipScreen() {
         <Text weight="bold" size="titleLarge">
           VIP Screen
         </Text>
+        <TextInput placeholder="What's up?" style={styles.input} />
       </Container>
     </BodyScrollView>
   );
 }
+
+const styles = StyleSheet.create((theme) => ({
+  input: {
+    width: '100%',
+    textAlign: 'center',
+    color: theme.colors.onSurface,
+    fontSize: theme.fontSize.bodyLarge,
+  },
+}));

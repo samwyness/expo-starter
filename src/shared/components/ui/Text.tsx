@@ -28,7 +28,7 @@ const styles = StyleSheet.create((theme) => ({
   base: (size: FontSize, weight: FontWeight) => ({
     color: theme.colors.onSurface,
     fontWeight: theme.fontWeights[weight],
-    fontSize: theme.fontSize(size),
+    fontSize: theme.fontSize[size],
     lineHeight: theme.lineHeight(size, 'normal'),
   }),
   center: {

@@ -28,7 +28,7 @@ export function Button({
   styles.useVariants({ variant, block });
 
   const handlePress = async (e: GestureResponderEvent) => {
-    await Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Medium);
+    void Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Medium);
     props.onPress?.(e);
   };
 
@@ -60,8 +60,14 @@ const styles = StyleSheet.create((theme) => ({
         filled: {
           backgroundColor: theme.colors.primary,
         },
-        filledTonal: {
+        tonal: {
           backgroundColor: theme.colors.primaryContainer,
+        },
+        errorFilled: {
+          backgroundColor: theme.colors.error,
+        },
+        errorTonal: {
+          backgroundColor: theme.colors.errorContainer,
         },
         outlined: {
           borderColor: theme.colors.outline,
@@ -86,9 +92,17 @@ const styles = StyleSheet.create((theme) => ({
             ? theme.rgbaColor('onPrimary', 10)
             : undefined,
         },
-        filledTonal: {
+        tonal: {
           backgroundColor: pressed
             ? theme.rgbaColor('onPrimaryContainer', 10)
+            : undefined,
+        },
+        errorFilled: {
+          backgroundColor: pressed ? theme.rgbaColor('onError', 10) : undefined,
+        },
+        errorTonal: {
+          backgroundColor: pressed
+            ? theme.rgbaColor('onErrorContainer', 10)
             : undefined,
         },
         outlined: {
@@ -120,8 +134,14 @@ const styles = StyleSheet.create((theme) => ({
         filled: {
           color: theme.colors.onPrimary,
         },
-        filledTonal: {
+        tonal: {
           color: theme.colors.onPrimaryContainer,
+        },
+        errorFilled: {
+          color: theme.colors.onError,
+        },
+        errorTonal: {
+          color: theme.colors.onErrorContainer,
         },
         outlined: {
           color: theme.colors.onSurface,
