@@ -4,7 +4,7 @@ export default {
   scheme: 'expo-starter',
   version: '1.0.0',
   orientation: 'portrait',
-  icon: './src/assets/images/icon.png',
+  icon: './assets/images/icon.png',
   userInterfaceStyle: 'automatic',
   newArchEnabled: true,
   ios: {
@@ -14,7 +14,7 @@ export default {
   },
   android: {
     adaptiveIcon: {
-      foregroundImage: './src/assets/images/adaptive-icon.png',
+      foregroundImage: './assets/images/adaptive-icon.png',
       backgroundColor: '#ffffff',
     },
     package: 'com.samwyness.expostarter',
@@ -23,7 +23,7 @@ export default {
   web: {
     bundler: 'metro',
     output: 'static',
-    favicon: './src/assets/images/favicon.png',
+    favicon: './assets/images/favicon.png',
   },
   plugins: [
     [
@@ -44,7 +44,7 @@ export default {
     [
       'expo-splash-screen',
       {
-        image: './src/assets/images/splash-icon.png',
+        image: './assets/images/splash-icon.png',
         imageWidth: 200,
         resizeMode: 'contain',
         backgroundColor: '#ffffff',
