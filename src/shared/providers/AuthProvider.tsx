@@ -7,6 +7,8 @@ import { env } from '#/shared/config/env';
 export default function AuthProvider({ children }: PropsWithChildren) {
   return (
     <ClerkProvider
+      telemetry={false}
+      routerDebug={false}
       publishableKey={env.CLERK_PUBLISHABLE_KEY}
       tokenCache={tokenCache}>
       <ClerkLoaded>{children}</ClerkLoaded>

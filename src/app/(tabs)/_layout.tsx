@@ -9,11 +9,10 @@ import IconSettingsFill from '@material-symbols/svg-400/rounded/instant_mix-fill
 import { Tabs } from 'expo-router';
 import type { ColorValue } from 'react-native';
 
-import { AppIcon } from '#/shared/components/ui/AppIcon';
-import { useAuthStore } from '#/shared/stores/authStore';
+import { AppIcon } from '#/shared/components/AppIcon';
 
 export default function TabsLayout() {
-  const isVip = useAuthStore((state) => state.isVip);
+  const isVip = true; // Replace with actual logic to determine if the user is a VIP
 
   return (
     <Tabs>

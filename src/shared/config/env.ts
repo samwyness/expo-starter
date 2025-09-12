@@ -10,10 +10,12 @@ import * as z from 'zod';
 const createEnv = () => {
   const EnvSchema = z.object({
     CLERK_PUBLISHABLE_KEY: z.string(),
+    CONVEX_URL: z.string(),
   });
 
   const envVars = {
     CLERK_PUBLISHABLE_KEY: process.env.EXPO_PUBLIC_CLERK_PUBLISHABLE_KEY,
+    CONVEX_URL: process.env.EXPO_PUBLIC_CONVEX_URL,
   };
 
   const parsedEnv = EnvSchema.safeParse(envVars);

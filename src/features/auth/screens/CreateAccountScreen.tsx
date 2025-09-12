@@ -4,9 +4,9 @@ import * as React from 'react';
 import { TextInput, View } from 'react-native';
 import { StyleSheet } from 'react-native-unistyles';
 
-import { Button } from '#/shared/components/ui/Button';
-import { Container } from '#/shared/components/ui/Container';
-import { Text } from '#/shared/components/ui/Text';
+import { Button } from '#/shared/components/Button';
+import { Container } from '#/shared/components/Container';
+import { Text } from '#/shared/components/Text';
 import { s } from '#/shared/theme/styles';
 
 export function CreateAccountScreen() {

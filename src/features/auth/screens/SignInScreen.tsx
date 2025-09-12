@@ -5,9 +5,9 @@ import React from 'react';
 import { TextInput, View } from 'react-native';
 import { StyleSheet } from 'react-native-unistyles';
 
-import { Button } from '#/shared/components/ui/Button';
-import { Container } from '#/shared/components/ui/Container';
-import { Text } from '#/shared/components/ui/Text';
+import { Button } from '#/shared/components/Button';
+import { Container } from '#/shared/components/Container';
+import { Text } from '#/shared/components/Text';
 import { s } from '#/shared/theme/styles';
 
 export function SignInScreen() {
@@ -37,8 +37,6 @@ export function SignInScreen() {
       // If sign-in process is complete, set the created session as active
       // and redirect the user
       if (signInAttempt.status === 'complete') {
-        console.log('status is complete?', signInAttempt.status);
-
         if (!useLocal) {
           await setCredentials({
             identifier: emailAddress,

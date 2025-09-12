@@ -2,8 +2,8 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import { create } from 'zustand';
 import { createJSONStorage, persist } from 'zustand/middleware';
 
-import type { RehydrationSlice } from './slices/rehydrationSlice';
-import { createRehydrationSlice } from './slices/rehydrationSlice';
+import type { RehydrationSlice } from '#/shared/stores/slices/rehydrationSlice';
+import { createRehydrationSlice } from '#/shared/stores/slices/rehydrationSlice';
 
 type OnboardingState = {
   hasCompletedOnboarding: boolean;
@@ -14,7 +14,9 @@ type OnboardingActions = {
   resetOnboarding: () => void;
 };
 
-type OnboardingStore = RehydrationSlice & OnboardingState & OnboardingActions;
+type OnboardingStore = (RehydrationSlice & OnboardingState) & {
+  actions: OnboardingActions;
+};
 
 export const useOnboardingStore = create<OnboardingStore>()(
   persist(
@@ -23,22 +25,14 @@ export const useOnboardingStore = create<OnboardingStore>()(
 
       hasCompletedOnboarding: false,
 
-      completeOnboarding: () => {
-        set((state) => {
-          return {
-            ...state,
-            hasCompletedOnboarding: true,
-          };
-        });
-      },
+      actions: {
+        completeOnboarding: () => {
+          set({ hasCompletedOnboarding: true });
+        },
 
-      resetOnboarding: () => {
-        set((state) => {
-          return {
-            ...state,
-            hasCompletedOnboarding: false,
-          };
-        });
+        resetOnboarding: () => {
+          set({ hasCompletedOnboarding: false });
+        },
       },
     }),
     {
@@ -53,3 +47,6 @@ export const useOnboardingStore = create<OnboardingStore>()(
     },
   ),
 );
+
+export const useOnboardingActions = () =>
+  useOnboardingStore((state) => state.actions);

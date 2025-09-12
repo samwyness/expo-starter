@@ -3,12 +3,12 @@ import type { WithoutSystemFields } from 'convex/server';
 import type { Validator } from 'convex/values';
 import { v } from 'convex/values';
 
-import { internalMutation, query } from '../_generated/server';
+import { internalMutation, mutation, query } from '../_generated/server';
 import {
-  createUser,
   deleteUser,
   getUserByExternalId,
   updateUser,
+  upsertUser,
 } from '../repos/users';
 import type { Doc } from '../types';
 import { requireUserOrThrow } from '../utils/auth';
@@ -25,6 +25,39 @@ export const current = query(async (ctx) => {
   }
 
   return user;
+});
+
+/**
+ * Ensure the current authenticated user exists in the database.
+ * If they do not exist, create a new user and profile.
+ * This is useful for ensuring that a user document exists after authentication.
+ */
+export const ensureCurrentUser = mutation({
+  async handler(ctx) {
+    const identity = await requireUserOrThrow(ctx);
+    if (!identity.email || !identity.emailVerified) {
+      throw new Error(
+        'Authenticated user has no verified email, cannot create user.',
+      );
+    }
+
+    const fullName = [identity.first_name, identity.last_name]
+      .filter(Boolean)
+      .join(' ')
+      .trim();
+
+    const userAttributes: WithoutSystemFields<Doc<'users'>> = {
+      externalId: identity.subject,
+      email: identity.email,
+      emailVerificationStatus: identity.emailVerified
+        ? 'verified'
+        : 'unverified',
+      fullName: fullName || undefined,
+    };
+
+    const userId = await upsertUser(ctx, userAttributes);
+    return userId;
+  },
 });
 
 /**
@@ -62,7 +95,7 @@ export const upsertFromClerk = internalMutation({
 
     const user = await getUserByExternalId(ctx, data.id);
     if (user === null) {
-      await createUser(ctx, userAttributes);
+      await upsertUser(ctx, userAttributes);
     } else {
       await updateUser(ctx, user._id, userAttributes);
     }

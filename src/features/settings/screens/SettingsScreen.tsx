@@ -1,15 +1,15 @@
 import { useAuth } from '@clerk/clerk-expo';
 
-import { BodyScrollView } from '#/shared/components/ui/BodyScrollView';
-import { Button } from '#/shared/components/ui/Button';
-import { Container } from '#/shared/components/ui/Container';
-import { Text } from '#/shared/components/ui/Text';
-import { useOnboardingStore } from '#/shared/stores/onboardingStore';
+import { useOnboardingActions } from '#/features/onboarding';
+import { BodyScrollView } from '#/shared/components/BodyScrollView';
+import { Button } from '#/shared/components/Button';
+import { Container } from '#/shared/components/Container';
+import { Text } from '#/shared/components/Text';
 import { s } from '#/shared/theme/styles';
 
 export function SettingsScreen() {
   const { signOut } = useAuth();
-  const resetOnboarding = useOnboardingStore((state) => state.resetOnboarding);
+  const { resetOnboarding } = useOnboardingActions();
 
   return (
     <BodyScrollView contentContainerStyle={s.flex_1}>

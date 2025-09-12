@@ -4,13 +4,12 @@ import { type MutationCtx, type QueryCtx } from '../_generated/server';
 import type { Doc, Id } from '../types';
 
 /**
- * Create a user with the given external ID. If a user with the
- * external ID already exists, return their existing ID.
+ * Create or update a user based on their external ID.
  * @param ctx The mutation context.
  * @param params The parameters for creating the user.
  * @returns The ID of the newly created user.
  */
-export async function createUser(
+export async function upsertUser(
   ctx: MutationCtx,
   params: WithoutSystemFields<Doc<'users'>>,
 ): Promise<Id<'users'>> {

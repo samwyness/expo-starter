@@ -1,4 +1,4 @@
-import '#/lib/unistyles';
+import '#/shared/lib/unistyles';
 
 import { ScrollViewStyleReset } from 'expo-router/html';
 

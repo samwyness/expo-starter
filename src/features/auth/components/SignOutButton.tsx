@@ -2,7 +2,7 @@ import { useClerk } from '@clerk/clerk-expo';
 import * as Linking from 'expo-linking';
 import { TouchableOpacity } from 'react-native';
 
-import { Text } from '#/shared/components/ui/Text';
+import { Text } from '#/shared/components/Text';
 
 export const SignOutButton = () => {
   const { signOut } = useClerk();
