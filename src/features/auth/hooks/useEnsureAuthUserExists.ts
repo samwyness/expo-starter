@@ -9,7 +9,7 @@ import { useCurrentUser } from './useCurrentUser';
 /**
  * Custom hook to ensure the current authenticated user exists in the database.
  * If they do not exist, it calls the `ensureCurrentUser` mutation to create
- * them. This is useful for ensuring that user and profile documents exists
+ * them. This is useful for ensuring that user and profile documents exist
  * after authentication.
  */
 export function useEnsureAuthUserExists() {
@@ -39,15 +39,9 @@ export function useEnsureAuthUserExists() {
       return;
     }
 
-    const ensureUser = async () => {
-      try {
-        await ensureUserMutation.mutateAsync({});
-        console.info('User created in Convex');
-      } catch (error) {
-        console.error('Error ensuring user in Convex:', error);
-      }
-    };
-
-    void ensureUser();
+    ensureUserMutation
+      .mutateAsync({})
+      .then(() => console.info('User created in Convex'))
+      .catch((error) => console.error('Error ensuring user in Convex:', error));
   }, [convexUser, ensureUserMutation, isAuthenticated, isLoading]);
 }
