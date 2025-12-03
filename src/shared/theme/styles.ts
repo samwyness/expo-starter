@@ -1,6 +1,6 @@
 import { StyleSheet } from 'react-native';
 
-import { ios, native, platform, web } from '../utils/platform';
+import { ios, native, platform, web } from '../lib/platform';
 import tokens from './tokens.json';
 
 export const atoms = {

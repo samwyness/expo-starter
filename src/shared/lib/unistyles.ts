@@ -1,7 +1,8 @@
 import { StyleSheet } from 'react-native-unistyles';
 
 import tokens from '#/shared/theme/tokens.json';
-import { hexToRgbRGBA } from '#/shared/utils/colors';
+
+import { hexToRgbRGBA } from './colors';
 
 const GRID_SPACING = tokens.spacing.xs;
 

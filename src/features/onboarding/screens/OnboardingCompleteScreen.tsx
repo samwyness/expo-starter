@@ -1,15 +1,14 @@
 import { View } from 'react-native';
 
-import { Button } from '#/shared/components/ui/Button';
-import { Container } from '#/shared/components/ui/Container';
-import { Text } from '#/shared/components/ui/Text';
-import { useOnboardingStore } from '#/shared/stores/onboardingStore';
+import { Button } from '#/shared/components/Button';
+import { Container } from '#/shared/components/Container';
+import { Text } from '#/shared/components/Text';
 import { s } from '#/shared/theme/styles';
 
+import { useOnboardingActions } from '../model/onboardingStore';
+
 export function OnboardingCompleteScreen() {
-  const completeOnboarding = useOnboardingStore(
-    (state) => state.completeOnboarding,
-  );
+  const { completeOnboarding } = useOnboardingActions();
 
   return (
     <View style={s.flex_1}>

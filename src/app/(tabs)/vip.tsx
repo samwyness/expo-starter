@@ -1,4 +1,4 @@
-import { VipScreen } from '#/features/vip';
+import { VipScreen } from '#/features/membership';
 
 export default function Vip() {
   return <VipScreen />;

@@ -1,17 +1,18 @@
+import IconAccount from '@material-symbols/svg-400/rounded/account_circle.svg';
+import IconAccountFill from '@material-symbols/svg-400/rounded/account_circle-fill.svg';
 import IconCrown from '@material-symbols/svg-400/rounded/crown.svg';
-import IconCrownFilled from '@material-symbols/svg-400/rounded/crown-fill.svg';
+import IconCrownFill from '@material-symbols/svg-400/rounded/crown-fill.svg';
 import IconHome from '@material-symbols/svg-400/rounded/home.svg';
-import IconHomeFilled from '@material-symbols/svg-400/rounded/home-fill.svg';
+import IconHomeFill from '@material-symbols/svg-400/rounded/home-fill.svg';
 import IconSettings from '@material-symbols/svg-400/rounded/instant_mix.svg';
-import IconSettingsFilled from '@material-symbols/svg-400/rounded/instant_mix-fill.svg';
+import IconSettingsFill from '@material-symbols/svg-400/rounded/instant_mix-fill.svg';
 import { Tabs } from 'expo-router';
 import type { ColorValue } from 'react-native';
 
-import { AppIcon } from '#/shared/components/ui/AppIcon';
-import { useAuthStore } from '#/shared/stores/authStore';
+import { AppIcon } from '#/shared/components/AppIcon';
 
 export default function TabsLayout() {
-  const isVip = useAuthStore((state) => state.isVip);
+  const isVip = true; // Replace with actual logic to determine if the user is a VIP
 
   return (
     <Tabs>
@@ -29,6 +30,10 @@ export default function TabsLayout() {
         name="settings"
         options={{ title: 'Settings', tabBarIcon: SettingsIcon }}
       />
+      <Tabs.Screen
+        name="account"
+        options={{ title: 'Account', tabBarIcon: AccountIcon }}
+      />
     </Tabs>
   );
 }
@@ -40,22 +45,25 @@ type TabBarIconProps = {
 };
 
 const HomeIcon = ({ focused, color, size }: TabBarIconProps) => (
-  <AppIcon
-    icon={focused ? IconHomeFilled : IconHome}
-    size={size}
-    fill={color}
-  />
+  <AppIcon icon={focused ? IconHomeFill : IconHome} size={size} fill={color} />
 );
 const VipIcon = ({ focused, color, size }: TabBarIconProps) => (
   <AppIcon
-    icon={focused ? IconCrownFilled : IconCrown}
+    icon={focused ? IconCrownFill : IconCrown}
     size={size}
     fill={color}
   />
 );
 const SettingsIcon = ({ focused, color, size }: TabBarIconProps) => (
   <AppIcon
-    icon={focused ? IconSettingsFilled : IconSettings}
+    icon={focused ? IconSettingsFill : IconSettings}
+    size={size}
+    fill={color}
+  />
+);
+const AccountIcon = ({ focused, color, size }: TabBarIconProps) => (
+  <AppIcon
+    icon={focused ? IconAccountFill : IconAccount}
     size={size}
     fill={color}
   />
