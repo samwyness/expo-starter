@@ -33,26 +33,11 @@ export const unstable_settings = {
 void SplashScreen.preventAutoHideAsync();
 
 function RootLayoutStack() {
-  const { isLoading: isAuthLoading, isAuthenticated } = useCurrentUser();
+  const { isAuthenticated } = useCurrentUser();
 
-  const hasOnboardingHydrated = useOnboardingStore(
-    (state) => state._hasHydrated,
-  );
   const hasCompletedOnboarding = useOnboardingStore(
     (state) => state.hasCompletedOnboarding,
   );
-
-  const hasAppHydrated = isAuthLoading === false && hasOnboardingHydrated;
-
-  React.useEffect(() => {
-    if (hasAppHydrated) {
-      void SplashScreen.hideAsync();
-    }
-  }, [hasAppHydrated]);
-
-  if (!hasAppHydrated) {
-    return null;
-  }
 
   return (
     <Stack screenOptions={{ headerShown: false }}>
