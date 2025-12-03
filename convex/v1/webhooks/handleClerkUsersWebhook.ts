@@ -19,7 +19,13 @@ export const handleClerkUsersWebhook = httpAction(async (ctx, request) => {
       break;
 
     case 'user.deleted': {
-      const clerkUserId = event.data.id!;
+      const clerkUserId = event.data.id;
+      if (!clerkUserId) {
+        console.error('Missing user id in user.deleted event', event);
+        return new Response('Missing user id in user.deleted event', {
+          status: 400,
+        });
+      }
       await ctx.runMutation(internal.v1.users.deleteFromClerk, {
         externalId: clerkUserId,
       });
