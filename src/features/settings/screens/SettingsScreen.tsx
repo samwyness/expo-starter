@@ -27,7 +27,7 @@ export function SettingsScreen() {
           title="Clear cache"
           variant="errorFilled"
           onPress={() => {
-            signOut();
+            void signOut();
             resetOnboarding();
           }}
         />
