@@ -2,4 +2,6 @@ node_modules
 ios
 android
 .vscode
+_generated
 __generated
+*.gen.*
