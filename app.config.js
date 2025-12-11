@@ -9,16 +9,22 @@ export default {
   newArchEnabled: true,
   ios: {
     supportsTablet: true,
+    icon: './assets/expo.icon',
     usesNonExemptEncryption: false,
     bundleIdentifier: 'com.samwyness.expostarter',
   },
   android: {
     adaptiveIcon: {
-      foregroundImage: './assets/images/adaptive-icon.png',
-      backgroundColor: '#ffffff',
+      adaptiveIcon: {
+        backgroundColor: '#E6F4FE',
+        foregroundImage: './assets/images/android-icon-foreground.png',
+        backgroundImage: './assets/images/android-icon-background.png',
+        monochromeImage: './assets/images/android-icon-monochrome.png',
+      },
     },
     package: 'com.samwyness.expostarter',
     edgeToEdgeEnabled: true,
+    predictiveBackGestureEnabled: false,
   },
   web: {
     bundler: 'metro',
